@@ -3,50 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The-Shop</title>
+    <title>The Shop | New Arrivals</title>
+    <meta name="description" content="Browse the latest products and shop the best deals at The Shop.">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">The-Shop</div>
-            <ul class="nav-links">
-                <li><a href="#products">Products</a></li>
-                <li><a href="#deals">Deals</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="nav-actions">
-                <button class="btn-signin">Sign In</button>
-                <a class="cart" href="#cart">Cart (0)</a>
-            </div>
+    <header class="site-header">
+        <div class="site-header__brand">
+            <a href="index.html" class="site-header__logo">The Shop</a>
+        </div>
+        <nav class="site-nav" aria-label="Site">
+            <a href="cart.html">Cart</a>
+            <a href="account/login.html">Login</a>
         </nav>
     </header>
 
     <main>
-        <section class="hero" id="hero">
-            <div class="hero-content">
-                <h1>Welcome to The-Shop</h1>
-                <p>Hero section placeholder for key messaging and call to action.</p>
-                <a class="btn-primary" href="#products">Shop Now</a>
+        <section class="hero" aria-labelledby="latest-products-title">
+            <div class="hero__intro">
+                <h1 id="latest-products-title">Fresh picks for you</h1>
+                <p>Discover what just landed in store and head straight to the product page to learn more.</p>
             </div>
+
+            <div class="carousel" data-carousel>
+                <div class="carousel__container">
+                    <button class="carousel__control" data-carousel-prev type="button" aria-label="View previous product">&#10094;</button>
+                    <div class="carousel__slides" data-carousel-track aria-live="polite"></div>
+                    <button class="carousel__control" data-carousel-next type="button" aria-label="View next product">&#10095;</button>
+                </div>
+            </div>
+            <p class="hero__status" data-carousel-status aria-live="polite"></p>
         </section>
 
-        <section class="featured-products" id="products">
-            <h2>Featured Products</h2>
-            <p>Product grid placeholder.</p>
+        <section class="products" aria-labelledby="product-grid-title">
+            <div class="products__header">
+                <h2 id="product-grid-title">Shop the latest 12 products</h2>
+                <p class="products__hint">Tap any product to open its details page and keep shopping.</p>
+            </div>
+            <div class="product-grid" data-product-grid aria-live="polite"></div>
+            <p class="products__status" data-products-status aria-live="polite"></p>
         </section>
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 The-Shop. All rights reserved.</p>
-            <ul class="footer-links">
-                <li><a href="#privacy">Privacy Policy</a></li>
-                <li><a href="#terms">Terms of Service</a></li>
-                <li><a href="#support">Support</a></li>
-            </ul>
-        </div>
+    <footer class="site-footer">
+        <small>&copy; <span data-year></span> The Shop. All rights reserved.</small>
     </footer>
-</body>
+
+    <template id="carousel-slide-template">
+        <article class="carousel__slide" data-slide>
+            <img class="carousel__image" alt="">
+            <div class="carousel__body">
+                <p class="carousel__tag" data-product-tags></p>
+                <h3 class="carousel__title"></h3>
+                <p class="carousel__price">
+                    <span class="carousel__price-current" data-price-current></span>
+                    <span class="carousel__price-original" data-price-original></span>
+                </p>
+                <a class="carousel__cta" data-product-link>View product</a>
+            </div>
+        </article>
+    </template>
+
+    <template id="product-card-template">
+        <a class="product-card" data-product-card>
+            <img class="product-card__image" alt="">
+            <span class="product-card__title"></span>
+            <span class="product-card__price" data-card-price></span>
+        </a>
+    </template>
+
+    <script src="index.js" defer></script>
 </body>
 </html>
