@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>The Shop | Product</title>
+	<meta name="description" content="View product details, pricing, and availability at The Shop.">
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<header class="site-header">
+		<div class="site-header__brand">
+			<a href="index.html" class="site-header__logo">The Shop</a>
+		</div>
+		<nav class="site-nav" aria-label="Site">
+			<a href="index.html">Home</a>
+			<a href="cart.html">Cart</a>
+			<a href="account/login.html">Login</a>
+		</nav>
+	</header>
+
+	<main>
+		<section class="product-page" aria-labelledby="product-title">
+			<a href="index.html" class="product-page__back">&larr; Back to products</a>
+			<p class="product-page__status" data-product-status role="status" aria-live="polite"></p>
+
+			<article class="product-detail" data-product-view hidden>
+				<div class="product-detail__media">
+					<img class="product-detail__image" data-product-image alt="">
+				</div>
+
+				<div class="product-detail__info">
+					<p class="product-detail__tags" data-product-tags></p>
+					<h1 id="product-title" data-product-title></h1>
+					<p class="product-detail__description" data-product-description></p>
+					<p class="product-detail__price">
+						<span class="product-detail__price-current" data-product-price></span>
+						<span class="product-detail__price-original" data-product-price-original hidden></span>
+					</p>
+
+					<div class="product-detail__actions">
+						<button type="button" class="product-detail__cart-btn" data-add-to-cart>Add to cart (coming soon)</button>
+						<p class="product-detail__note">We are still working on the cart experience, but the button is here for later.</p>
+					</div>
+				</div>
+			</article>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<small>&copy; <span data-year></span> The Shop. All rights reserved.</small>
+	</footer>
+
+	<script src="product.js" defer></script>
+</body>
+</html>
