@@ -9,7 +9,15 @@ const yearOutput = document.querySelector("[data-year]");
 
 const CURRENCY = "USD";
 const carouselState = { slides: [], index: 0 };
-const currency = new Intl.NumberFormat(undefined, { style: "currency", currency: CURRENCY });
+
+const utils = window.ShopUtils || {};
+const {
+    formatPrice = (value) => value,
+    getImageUrl = () => "",
+    getImageAlt = ({ title }) => title || "",
+    formatTags = () => "",
+    setStatus = () => {},
+} = utils;
 
 if (yearOutput) {
     yearOutput.textContent = new Date().getFullYear();
@@ -110,7 +118,7 @@ function renderProductGrid(products) {
         }
 
         if (cardPrice) {
-            cardPrice.textContent = formatPrice(discountedPrice ?? price ?? 0);
+            cardPrice.textContent = formatPrice(discountedPrice ?? price ?? 0, CURRENCY);
         }
 
         productGrid.appendChild(node);
@@ -157,12 +165,12 @@ function setupCarousel(items) {
 
         if (priceNow) {
             const currentPrice = discountedPrice ?? price ?? 0;
-            priceNow.textContent = formatPrice(currentPrice);
+            priceNow.textContent = formatPrice(currentPrice, CURRENCY);
         }
 
         if (priceOriginal) {
             const hasDiscount = typeof discountedPrice === "number" && typeof price === "number" && discountedPrice < price;
-            priceOriginal.textContent = hasDiscount ? formatPrice(price) : "";
+            priceOriginal.textContent = hasDiscount ? formatPrice(price, CURRENCY) : "";
             priceOriginal.hidden = !hasDiscount;
         }
 
@@ -202,34 +210,4 @@ function updateCarouselStatus() {
 function toggleCarouselControls(disabled) {
     if (prevButton) prevButton.disabled = disabled;
     if (nextButton) nextButton.disabled = disabled;
-}
-
-function setStatus(element, message) {
-    if (element) {
-        element.textContent = message;
-    }
-}
-
-function formatPrice(value) {
-    return currency.format(Number.isFinite(value) ? value : 0);
-}
-
-function getImageUrl({ image, imageUrl }) {
-    if (typeof imageUrl === "string" && imageUrl.trim()) return imageUrl;
-    if (typeof image === "string" && image.trim()) return image;
-    if (image && typeof image === "object" && typeof image.url === "string") return image.url;
-    return "";
-}
-
-function getImageAlt({ image, title }) {
-    if (image && typeof image === "object" && typeof image.alt === "string" && image.alt.trim()) {
-        return image.alt;
-    }
-
-    return title || "";
-}
-
-function formatTags(tags) {
-    if (!Array.isArray(tags) || !tags.length) return "New arrival";
-    return tags.slice(0, 3).map((tag) => `#${tag}`).join(" · ");
 }
