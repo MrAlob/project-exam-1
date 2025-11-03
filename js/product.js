@@ -13,7 +13,16 @@ const imageNode = document.querySelector("[data-product-image]");
 const addToCartButton = document.querySelector("[data-add-to-cart]");
 const yearNode = document.querySelector("[data-year]");
 
-const currency = new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" });
+const CURRENCY = "USD";
+
+const utils = window.ShopUtils || {};
+const {
+    formatPrice = (value) => value,
+    formatTags = () => "",
+    getImageUrl = () => "",
+    getImageAlt = ({ title }) => title || "Product image",
+    setStatus: setStatusMessage = () => {},
+} = utils;
 
 if (yearNode) {
     yearNode.textContent = new Date().getFullYear();
@@ -26,26 +35,26 @@ if (addToCartButton) {
 }
 
 if (!productId) {
-    setStatus("We could not find a product. Please return to the home page and try again.");
+    updateStatus("We could not find a product. Please return to the home page and try again.");
 } else {
     loadProduct(productId);
 }
 
 async function loadProduct(id) {
-    setStatus("Loading product details...");
+    updateStatus("Loading product details...");
 
     try {
         const product = await fetchProduct(id);
         if (!product) {
-            setStatus("This product is not available right now.");
+            updateStatus("This product is not available right now.");
             return;
         }
 
         renderProduct(product);
-        setStatus("");
+        updateStatus("");
     } catch (error) {
         console.error(error);
-        setStatus("We could not load this product. Please try again later.");
+        updateStatus("We could not load this product. Please try again later.");
     }
 }
 
@@ -91,12 +100,12 @@ function renderProduct(product) {
 
     const currentPrice = typeof discountedPrice === "number" ? discountedPrice : price;
     if (priceNode) {
-        priceNode.textContent = formatPrice(currentPrice);
+        priceNode.textContent = formatPrice(currentPrice, CURRENCY);
     }
 
     const showOriginal = typeof discountedPrice === "number" && typeof price === "number" && discountedPrice < price;
     if (originalPriceNode) {
-        originalPriceNode.textContent = showOriginal ? formatPrice(price) : "";
+        originalPriceNode.textContent = showOriginal ? formatPrice(price, CURRENCY) : "";
         originalPriceNode.hidden = !showOriginal;
     }
 
@@ -106,48 +115,6 @@ function renderProduct(product) {
     }
 }
 
-function setStatus(message) {
-    if (statusNode) {
-        statusNode.textContent = message;
-    }
-}
-
-function formatPrice(value) {
-    if (Number.isFinite(value)) {
-        return currency.format(value);
-    }
-
-    return currency.format(0);
-}
-
-function formatTags(tags) {
-    if (!Array.isArray(tags) || !tags.length) {
-        return "New arrival";
-    }
-
-    return tags.slice(0, 3).map((tag) => `#${tag}`).join(" · ");
-}
-
-function getImageUrl({ image, imageUrl }) {
-    if (typeof imageUrl === "string" && imageUrl.trim()) {
-        return imageUrl;
-    }
-
-    if (typeof image === "string" && image.trim()) {
-        return image;
-    }
-
-    if (image && typeof image === "object" && typeof image.url === "string") {
-        return image.url;
-    }
-
-    return "";
-}
-
-function getImageAlt({ image, title }) {
-    if (image && typeof image === "object" && typeof image.alt === "string" && image.alt.trim()) {
-        return image.alt;
-    }
-
-    return title || "Product image";
+function updateStatus(message) {
+    setStatusMessage(statusNode, message);
 }
