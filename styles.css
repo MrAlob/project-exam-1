@@ -258,6 +258,113 @@ main {
   text-align: center;
 }
 
+.product-page {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(17, 17, 17, 0.08);
+}
+
+.product-page__back {
+  font-weight: 500;
+  color: #2b5dd5;
+}
+
+.product-page__status {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #555555;
+}
+
+.product-detail {
+  display: grid;
+  gap: clamp(1.5rem, 5vw, 2.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.product-detail__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-detail__image {
+  width: min(100%, 420px);
+  height: clamp(18rem, 45vw, 26rem);
+  object-fit: contain;
+  background: #f3f3f3;
+  border-radius: 1rem;
+  padding: clamp(0.75rem, 3vw, 1.25rem);
+  box-shadow: 0 12px 30px rgba(17, 17, 17, 0.08);
+}
+
+.product-detail__info {
+  display: grid;
+  gap: 1rem;
+}
+
+.product-detail__tags {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  color: #2b5dd5;
+}
+
+.product-detail__description {
+  margin: 0;
+  color: #333333;
+}
+
+.product-detail__price {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  margin: 0;
+  font-weight: 600;
+  color: #111111;
+}
+
+.product-detail__price-current {
+  color: #2b5dd5;
+}
+
+.product-detail__price-original {
+  color: #666666;
+  text-decoration: line-through;
+  font-size: 0.95rem;
+}
+
+.product-detail__actions {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.product-detail__cart-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  background: #111111;
+  color: #ffffff;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.product-detail__cart-btn:hover,
+.product-detail__cart-btn:focus-visible {
+  background: #2b5dd5;
+}
+
+.product-detail__note {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555555;
+}
+
 @media (max-width: 960px) {
   .carousel__slide {
     grid-template-columns: 1fr;
@@ -305,6 +412,10 @@ main {
 
   .carousel__image {
     height: clamp(16rem, 65vw, 22rem);
+  }
+
+  .product-page {
+    padding: clamp(1rem, 6vw, 2rem);
   }
 }
 
