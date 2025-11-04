@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>The Shop | Sign in</title>
+	<meta name="description" content="Sign in to The Shop to access your cart and proceed to checkout.">
+	<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+	<header class="site-header">
+		<div class="site-header__brand">
+			<a href="../index.html" class="site-header__logo">The Shop</a>
+		</div>
+		<nav class="site-nav" aria-label="Account">
+			<a href="../index.html">Home</a>
+			<a href="login.html" aria-current="page">Login</a>
+			<a href="register.html">Register</a>
+		</nav>
+	</header>
+
+	<main class="auth-main" aria-labelledby="login-title">
+		<section class="auth-card">
+			<h1 id="login-title">Welcome back</h1>
+			<p class="auth-card__intro">Sign in with your shop account to add products to your cart and manage your orders.</p>
+
+			<form data-login-form class="auth-form" novalidate>
+				<div class="form-field">
+					<label for="email">Email address</label>
+					<input type="email" id="email" name="email" autocomplete="email" required>
+					<small class="field-error" data-error-for="email" aria-live="polite"></small>
+				</div>
+
+				<div class="form-field">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" autocomplete="current-password" minlength="8" required>
+					<small class="field-error" data-error-for="password" aria-live="polite"></small>
+				</div>
+
+				<button type="submit">Sign in</button>
+			</form>
+
+			<p class="form-message" data-form-message role="status" aria-live="polite"></p>
+			<p class="auth-card__hint">Need an account? <a href="register.html">Create one here.</a></p>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<small>&copy; <span data-year></span> The Shop. All rights reserved.</small>
+	</footer>
+
+	<script src="../js/login.js" defer></script>
+</body>
+</html>
