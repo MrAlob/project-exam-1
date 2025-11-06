@@ -12,11 +12,18 @@
 		<div class="site-header__brand">
 			<a href="index.html" class="site-header__logo">The Shop</a>
 		</div>
-		<nav class="site-nav" aria-label="Site">
+		<button class="site-header__toggle" aria-label="Open menu" aria-controls="site-navigation" aria-haspopup="true" aria-expanded="false" data-nav-toggle>
+			<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+				<path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+			</svg>
+		</button>
+		<nav class="site-nav" aria-label="Site" data-nav id="site-navigation">
+			<button class="site-nav__close" aria-label="Close menu" data-nav-close>&times;</button>
 			<a href="index.html">Home</a>
 			<a href="cart.html" aria-current="page">Cart</a>
 			<a href="account/login.html">Login</a>
 		</nav>
+		<div class="site-nav__overlay" data-nav-overlay hidden></div>
 	</header>
 
 	<main>
@@ -58,20 +65,35 @@
 	</footer>
 
 	<template id="cart-item-template">
-		<article class="cart-item">
+		<article class="cart-item" data-line-item>
 			<img class="cart-item__image" alt="">
 			<div class="cart-item__details">
 				<h3 class="cart-item__title"></h3>
 				<p class="cart-item__meta">
 					<span class="cart-item__price" data-item-price></span>
-					<span class="cart-item__quantity" data-item-quantity></span>
 				</p>
+				<div class="cart-item__quantity-controls" role="group" aria-label="Adjust quantity">
+					<button type="button" class="cart-item__quantity-btn" data-item-action="decrease" aria-label="Decrease quantity">
+						<span aria-hidden="true">&minus;</span>
+					</button>
+					<span class="cart-item__quantity-value" data-item-quantity aria-live="polite" aria-atomic="true"></span>
+					<button type="button" class="cart-item__quantity-btn" data-item-action="increase" aria-label="Increase quantity">
+						<span aria-hidden="true">+</span>
+					</button>
+				</div>
 			</div>
-			<p class="cart-item__total" data-item-total></p>
+			<div class="cart-item__summary">
+				<p class="cart-item__total" data-item-total></p>
+				<button type="button" class="cart-item__remove" data-item-action="remove">Remove</button>
+			</div>
 		</article>
 	</template>
 
+	<script src="js/utils/config.js" defer></script>
+	<script src="js/utils/services.js" defer></script>
+	<script src="js/utils/cart.js" defer></script>
 	<script src="js/utils/dom.js" defer></script>
+	<script src="js/site-nav.js" defer></script>
 	<script src="js/cart.js" defer></script>
 </body>
 </html>

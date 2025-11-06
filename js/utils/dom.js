@@ -46,11 +46,29 @@
         }
     }
 
+    function setCurrentYear(target) {
+        if (!target) return;
+        const year = new Date().getFullYear();
+
+        if (typeof target === "string") {
+            const element = document.querySelector(target);
+            if (element) {
+                element.textContent = year;
+            }
+            return;
+        }
+
+        if (target instanceof Element) {
+            target.textContent = year;
+        }
+    }
+
     global.ShopUtils = {
         formatPrice,
         getImageUrl,
         getImageAlt,
         formatTags,
         setStatus,
+        setCurrentYear,
     };
 })(window);

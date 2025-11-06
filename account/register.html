@@ -5,18 +5,25 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>The Shop | Create account</title>
 	<meta name="description" content="Create a new account to start shopping at The Shop.">
-	<link rel="stylesheet" href="../styles.css">
+	<link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
 	<header class="site-header">
 		<div class="site-header__brand">
 			<a href="../index.html" class="site-header__logo">The Shop</a>
 		</div>
-		<nav class="site-nav" aria-label="Account">
+		<button class="site-header__toggle" aria-label="Open menu" aria-controls="site-navigation" aria-haspopup="true" aria-expanded="false" data-nav-toggle>
+			<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+				<path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+			</svg>
+		</button>
+		<nav class="site-nav" aria-label="Account" data-nav id="site-navigation">
+			<button class="site-nav__close" aria-label="Close menu" data-nav-close>&times;</button>
 			<a href="../index.html">Home</a>
+			<a href="../cart.html">Cart</a>
 			<a href="login.html">Login</a>
-			<a href="register.html" aria-current="page">Register</a>
 		</nav>
+		<div class="site-nav__overlay" data-nav-overlay hidden></div>
 	</header>
 
 	<main class="auth-main" aria-labelledby="register-title">
@@ -61,6 +68,10 @@
 		<small>&copy; <span data-year></span> The Shop. All rights reserved.</small>
 	</footer>
 
+	<script src="../js/utils/config.js" defer></script>
+	<script src="../js/utils/services.js" defer></script>
+	<script src="../js/utils/dom.js" defer></script>
+	<script src="../js/site-nav.js" defer></script>
 	<script src="../js/register.js" defer></script>
 </body>
 </html>

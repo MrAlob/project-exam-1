@@ -1,4 +1,6 @@
-const API_URL = "https://api.noroff.dev/api/v1/online-shop";
+const { ShopConfig = {}, ShopServices = {}, ShopUtils = {} } = window;
+
+const API_URL = ShopServices.getOnlineShopUrl ? ShopServices.getOnlineShopUrl() : "https://api.noroff.dev/api/v1/online-shop";
 const productGrid = document.querySelector("[data-product-grid]");
 const productsStatus = document.querySelector("[data-products-status]");
 const carouselTrack = document.querySelector("[data-carousel-track]");
@@ -10,17 +12,29 @@ const yearOutput = document.querySelector("[data-year]");
 const CURRENCY = "USD";
 const carouselState = { slides: [], index: 0 };
 
-const utils = window.ShopUtils || {};
 const {
     formatPrice = (value) => value,
     getImageUrl = () => "",
     getImageAlt = ({ title }) => title || "",
     formatTags = () => "",
     setStatus = () => {},
-} = utils;
+    setCurrentYear = (target) => {
+        if (target) {
+            target.textContent = new Date().getFullYear();
+        }
+    },
+} = ShopUtils;
+
+const fetchJson = ShopServices.fetchJson || (async (url, options) => {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+    }
+    return response.json();
+});
 
 if (yearOutput) {
-    yearOutput.textContent = new Date().getFullYear();
+    setCurrentYear(yearOutput);
 }
 
 if (prevButton && nextButton) {
@@ -64,20 +78,13 @@ async function fetchProducts(limit) {
 
     for (const url of endpoints) {
         try {
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                throw new Error(`Failed to load products: ${response.status}`);
-            }
-
-            const result = await response.json();
-            if (Array.isArray(result.data) && result.data.length) {
-                return result.data;
-            }
-
-            // Some API responses use the array directly without wrapping it in a data property.
+            const result = await fetchJson(url);
             if (Array.isArray(result) && result.length) {
                 return result;
+            }
+
+            if (result && typeof result === "object" && Array.isArray(result.data) && result.data.length) {
+                return result.data;
             }
         } catch (error) {
             lastError = error;

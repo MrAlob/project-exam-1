@@ -12,11 +12,18 @@
 		<div class="site-header__brand">
 			<a href="index.html" class="site-header__logo">The Shop</a>
 		</div>
-		<nav class="site-nav" aria-label="Site">
+		<button class="site-header__toggle" aria-label="Open menu" aria-controls="site-navigation" aria-haspopup="true" aria-expanded="false" data-nav-toggle>
+			<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+				<path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+			</svg>
+		</button>
+		<nav class="site-nav" aria-label="Site" data-nav id="site-navigation">
+			<button class="site-nav__close" aria-label="Close menu" data-nav-close>&times;</button>
 			<a href="index.html">Home</a>
 			<a href="cart.html">Cart</a>
 			<a href="account/login.html">Login</a>
 		</nav>
+		<div class="site-nav__overlay" data-nav-overlay hidden></div>
 	</header>
 
 	<main>
@@ -38,12 +45,40 @@
 						<span class="product-detail__price-original" data-product-price-original hidden></span>
 					</p>
 
-					<div class="product-detail__actions">
-						<button type="button" class="product-detail__cart-btn" data-add-to-cart>Add to cart (coming soon)</button>
-						<p class="product-detail__note">We are still working on the cart experience, but the button is here for later.</p>
+					<div class="product-detail__meta">
+						<p class="product-detail__rating" data-product-rating>
+							<span class="product-detail__rating-value" data-product-rating-value>Not rated yet</span>
+							<span class="product-detail__rating-count" data-product-rating-count></span>
+						</p>
+						<div class="product-detail__share">
+							<button type="button" class="product-detail__share-btn" data-product-share aria-label="Share this product">
+								<svg class="product-detail__share-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+									<path d="M8 12l8-5v10l-8-5z" fill="currentColor"></path>
+									<path d="M5 5h6v2H7v10h4v2H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" fill="currentColor"></path>
+								</svg>
+								<span class="product-detail__share-text">Share</span>
+							</button>
+							<p class="product-detail__share-status" data-product-share-status aria-live="polite"></p>
+						</div>
+					</div>
+
+					<div class="product-detail__actions" data-product-actions>
+						<button type="button" class="product-detail__cart-btn" data-add-to-cart>Add to cart</button>
+						<a class="product-detail__cart-btn product-detail__cart-btn--secondary" href="cart.html" data-proceed-to-cart>Proceed to cart</a>
+						<p class="product-detail__auth" data-product-auth-note hidden>Sign in with your owner account to add this product to your cart.</p>
+						<p class="product-detail__note" data-product-cart-note>Review everything you add from the cart page before checking out.</p>
 					</div>
 				</div>
 			</article>
+
+			<section class="product-reviews" aria-labelledby="reviews-title" data-product-reviews hidden>
+				<div class="product-reviews__header">
+					<h2 id="reviews-title">Customer reviews</h2>
+					<p class="product-reviews__summary" data-product-review-summary></p>
+				</div>
+				<p class="product-reviews__empty" data-product-review-empty hidden>No reviews yet. Be the first to share your thoughts.</p>
+				<ul class="product-reviews__list" data-product-review-list></ul>
+			</section>
 		</section>
 	</main>
 
@@ -51,7 +86,11 @@
 		<small>&copy; <span data-year></span> The Shop. All rights reserved.</small>
 	</footer>
 
+	<script src="js/utils/config.js" defer></script>
+	<script src="js/utils/services.js" defer></script>
+	<script src="js/utils/cart.js" defer></script>
 	<script src="js/utils/dom.js" defer></script>
+	<script src="js/site-nav.js" defer></script>
 	<script src="js/product.js" defer></script>
 </body>
 </html>
