@@ -5,23 +5,36 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>The Shop | Checkout</title>
 	<meta name="description" content="Review your cart, add delivery details, and place your order at The Shop.">
-	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 	<header class="site-header">
 		<div class="site-header__brand">
 			<a href="index.html" class="site-header__logo">The Shop</a>
 		</div>
-		<nav class="site-nav" aria-label="Primary">
+		<button class="site-header__toggle" aria-label="Open menu" aria-controls="site-navigation" aria-haspopup="true" aria-expanded="false" data-nav-toggle>
+			<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+				<path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+			</svg>
+		</button>
+		<nav class="site-nav" aria-label="Primary" data-nav id="site-navigation">
+			<button class="site-nav__close" aria-label="Close menu" data-nav-close>&times;</button>
 			<a href="index.html">Home</a>
 			<a href="cart.html">Cart</a>
 			<a href="account/login.html">Login</a>
 		</nav>
+		<div class="site-nav__overlay" data-nav-overlay hidden></div>
 	</header>
 
 	<main class="checkout-main" aria-labelledby="checkout-title">
 		<header class="checkout-intro">
-			<p class="checkout-intro__step">Step 3 of 3</p>
+			<div class="checkout-intro__top">
+				<a class="checkout-intro__back" href="cart.html">
+					<span class="checkout-intro__back-icon" aria-hidden="true">&larr;</span>
+					<span>Back to cart</span>
+				</a>
+				<p class="checkout-intro__step">Step 3 of 3</p>
+			</div>
 			<h1 id="checkout-title">Checkout</h1>
 			<p class="checkout-intro__hint">Provide your delivery details, pick a payment method, and confirm your order.</p>
 		</header>
@@ -130,34 +143,20 @@
 
 				<aside class="checkout-summary" aria-labelledby="summary-title">
 					<h2 id="summary-title">Order summary</h2>
-					<ul class="checkout-summary__items">
-						<li>
-							<div>
-								<p class="item-name">Gold headphones</p>
-								<p class="item-meta">Qty 1 · $382.49</p>
-							</div>
-							<p class="item-total">$382.49</p>
-						</li>
-						<li>
-							<div>
-								<p class="item-name">Vanilla perfume</p>
-								<p class="item-meta">Qty 1 · $2,079.99</p>
-							</div>
-							<p class="item-total">$2,079.99</p>
-						</li>
-					</ul>
+					<ul class="checkout-summary__items" data-summary-items></ul>
+					<p class="checkout-summary__empty" data-summary-empty hidden>Your cart is empty right now. Add an item to proceed.</p>
 					<dl class="checkout-summary__totals">
 						<div>
 							<dt>Subtotal</dt>
-							<dd>$2,462.48</dd>
+							<dd data-summary-subtotal>—</dd>
 						</div>
 						<div>
 							<dt>Shipping</dt>
-							<dd>$25.00</dd>
+							<dd data-summary-shipping>—</dd>
 						</div>
 						<div class="checkout-summary__grand">
 							<dt>Total</dt>
-							<dd>$2,487.48</dd>
+							<dd data-summary-total>—</dd>
 						</div>
 					</dl>
 					<p class="checkout-summary__note">Prices include taxes. Shipping updates will be sent by email.</p>
@@ -173,6 +172,12 @@
 		<small>&copy; <span data-year></span> The Shop. All rights reserved.</small>
 	</footer>
 
+	<script src="js/utils/config.js" defer></script>
+	<script src="js/site-nav.js" defer></script>
+	<script src="js/utils/services.js" defer></script>
+	<script src="js/utils/cart.js" defer></script>
+	<script src="js/utils/orders.js" defer></script>
+	<script src="js/utils/dom.js" defer></script>
 	<script src="js/checkout.js" defer></script>
 </body>
 </html>

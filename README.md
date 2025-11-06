@@ -28,7 +28,7 @@ The project talks to `https://api.noroff.dev/api/v1/online-shop`. No additional 
 ```
 project-exam-1/
 ├── css/
-│   └── styles.css          # Shared site-wide styles
+│   └── css/styles.css      # Shared site-wide styles
 ├── js/
 │   ├── home.js             # Homepage carousel + product grid logic
 │   ├── product.js          # Product detail page logic

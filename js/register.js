@@ -1,11 +1,22 @@
-const REGISTER_URL = "https://api.noroff.dev/api/v1/auth/register";
-const AUTH_URL = "https://api.noroff.dev/api/v1/auth/login";
-const TOKEN_STORAGE_KEY = "theShopToken";
-const PROFILE_STORAGE_KEY = "theShopUser";
+const { ShopConfig = {}, ShopServices = {}, ShopUtils = {} } = window;
+
+const TOKEN_STORAGE_KEY = ShopConfig.storageKeys?.token || "theShopToken";
+const PROFILE_STORAGE_KEY = ShopConfig.storageKeys?.profile || "theShopUser";
+const NOROFF_EMAIL_PATTERN = /@(stud\.)?noroff\.no$/i;
+const REGISTER_ENDPOINTS = resolveAuthEndpoints("register");
+const LOGIN_ENDPOINTS = resolveAuthEndpoints("login");
 
 const form = document.querySelector("[data-register-form]");
 const message = document.querySelector("[data-form-message]");
 const yearOutput = document.querySelector("[data-year]");
+
+const {
+    setCurrentYear = (target) => {
+        if (target) {
+            target.textContent = new Date().getFullYear();
+        }
+    },
+} = ShopUtils;
 
 const fieldErrors = {};
 document.querySelectorAll("[data-error-for]").forEach((element) => {
@@ -15,7 +26,7 @@ document.querySelectorAll("[data-error-for]").forEach((element) => {
 });
 
 if (yearOutput) {
-    yearOutput.textContent = new Date().getFullYear();
+    setCurrentYear(yearOutput);
 }
 
 if (form) {
@@ -71,6 +82,9 @@ function validate({ name, email, password, confirmPassword }) {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         setFieldError("email", "Email must be in a valid format.");
         isValid = false;
+    } else if (!NOROFF_EMAIL_PATTERN.test(email)) {
+        setFieldError("email", "Use your @stud.noroff.no or @noroff.no email address.");
+        isValid = false;
     }
 
     if (!password) {
@@ -98,10 +112,10 @@ async function handleSubmit(event) {
 
     const formData = new FormData(form);
     const payload = {
-        name: formData.get("name").toString().trim(),
-        email: formData.get("email").toString().trim().toLowerCase(),
-        password: formData.get("password").toString(),
-        confirmPassword: formData.get("confirmPassword").toString(),
+        name: (formData.get("name") || "").toString().trim(),
+        email: (formData.get("email") || "").toString().trim().toLowerCase(),
+        password: (formData.get("password") || "").toString(),
+        confirmPassword: (formData.get("confirmPassword") || "").toString(),
     };
 
     if (!validate(payload)) {
@@ -113,8 +127,8 @@ async function handleSubmit(event) {
     setFormMessage("Creating your account...", "info");
 
     try {
-        await registerUser({ name: payload.name, email: payload.email, password: payload.password });
-        const authResult = await loginUser({ email: payload.email, password: payload.password, name: payload.name });
+    await registerUser({ name: payload.name, email: payload.email, password: payload.password });
+    const authResult = await loginUser({ email: payload.email, password: payload.password, name: payload.name });
 
         setFormMessage("Account created successfully! Redirecting...", "success");
         form.reset();
@@ -142,41 +156,13 @@ async function handleSubmit(event) {
 }
 
 async function registerUser(payload) {
-    const response = await fetch(REGISTER_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-        const apiMessage = result?.errors?.[0]?.message || result?.message || "Registration failed.";
-        throw new Error(apiMessage);
-    }
-
-    return result;
+    return postJsonWithFallback(REGISTER_ENDPOINTS, payload, "registration");
 }
 
 async function loginUser({ email, password, name }) {
-    const response = await fetch(AUTH_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-    });
+    const result = await postJsonWithFallback(LOGIN_ENDPOINTS, { email, password }, "login");
 
-    const result = await response.json();
-
-    if (!response.ok) {
-        const apiMessage = result?.errors?.[0]?.message || result?.message || "Login failed.";
-        throw new Error(apiMessage);
-    }
-
-    if (typeof result.accessToken !== "string") {
+    if (typeof result?.accessToken !== "string") {
         throw new Error("The server did not return a valid access token.");
     }
 
@@ -190,4 +176,107 @@ async function loginUser({ email, password, name }) {
         token: result.accessToken,
         profile,
     };
+}
+
+function resolveAuthEndpoints(path) {
+    const urls = new Set();
+
+    if (ShopServices.getAuthUrlList) {
+        const candidates = ShopServices.getAuthUrlList(path);
+        if (Array.isArray(candidates)) {
+            candidates.filter(Boolean).forEach((candidate) => urls.add(candidate));
+        }
+    } else if (ShopServices.getAuthUrl) {
+        urls.add(ShopServices.getAuthUrl(path));
+    }
+
+    const fallbacks = [
+        `https://v2.api.noroff.dev/auth/${path}`,
+        `https://api.noroff.dev/auth/${path}`,
+        `https://api.noroff.dev/api/v1/auth/${path}`,
+    ];
+
+    fallbacks.filter(Boolean).forEach((candidate) => urls.add(candidate));
+
+    return Array.from(urls);
+}
+
+async function postJsonWithFallback(endpoints, payload, contextLabel = "request") {
+    if (!Array.isArray(endpoints) || !endpoints.length) {
+        throw new Error("Authentication service is not configured.");
+    }
+
+    const requestBody = JSON.stringify(payload);
+    const headers = {
+        "Content-Type": "application/json",
+    };
+
+    let lastError = null;
+
+    for (let index = 0; index < endpoints.length; index += 1) {
+        const endpoint = endpoints[index];
+        try {
+            const response = await fetch(endpoint, {
+                method: "POST",
+                headers,
+                body: requestBody,
+            });
+
+            const rawPayload = await parseAuthJson(response);
+
+            if (!response.ok) {
+                const error = buildAuthError(response, rawPayload, contextLabel);
+                if (response.status === 404 && index < endpoints.length - 1) {
+                    lastError = error;
+                    continue;
+                }
+                throw error;
+            }
+
+            return unwrapAuthPayload(rawPayload) || {};
+        } catch (error) {
+            if ((error?.status === 404 || error?.name === "TypeError") && index < endpoints.length - 1) {
+                lastError = error;
+                continue;
+            }
+            throw error;
+        }
+    }
+
+    throw lastError || new Error(`We could not complete the ${contextLabel}. Please try again later.`);
+}
+
+async function parseAuthJson(response) {
+    const contentType = response.headers?.get("content-type") || "";
+    if (!contentType.includes("application/json")) {
+        return null;
+    }
+
+    try {
+        return await response.json();
+    } catch (error) {
+        console.error("Failed to parse auth response", error);
+        return null;
+    }
+}
+
+function buildAuthError(response, payload, contextLabel) {
+    const message =
+        payload?.errors?.[0]?.message || payload?.message || `We could not complete the ${contextLabel}. (Status ${response.status})`;
+
+    const error = new Error(message);
+    error.status = response.status;
+    error.payload = payload;
+    return error;
+}
+
+function unwrapAuthPayload(payload) {
+    if (payload && typeof payload === "object" && Object.prototype.hasOwnProperty.call(payload, "data")) {
+        const data = payload.data;
+        if (data !== null && data !== undefined) {
+            return data;
+        }
+    }
+
+    return payload;
 }
