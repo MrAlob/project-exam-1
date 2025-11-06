@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>The Shop | Order confirmed</title>
+	<meta name="description" content="Thank you for shopping with The Shop. Your order is confirmed and on its way.">
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<header class="site-header">
+		<div class="site-header__brand">
+			<a href="index.html" class="site-header__logo">The Shop</a>
+		</div>
+		<nav class="site-nav" aria-label="Primary">
+			<a href="index.html">Home</a>
+			<a href="cart.html">Cart</a>
+			<a href="account/login.html">Login</a>
+		</nav>
+	</header>
+
+	<main class="success-main" aria-labelledby="success-title">
+		<section class="success-card">
+			<div class="success-card__icon" aria-hidden="true">
+				<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<circle cx="20" cy="20" r="20" fill="currentColor" opacity="0.12" />
+					<path d="M28.667 15.333 17.958 26.042l-6.625-6.625" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+				</svg>
+			</div>
+			<p class="success-card__eyebrow">Order confirmed</p>
+			<h1 id="success-title">Thanks for your purchase</h1>
+			<p class="success-card__intro">We received your payment and sent the receipt to your inbox. We&rsquo;ll notify you as soon as the package is on the move.</p>
+
+			<dl class="success-card__details">
+				<div>
+					<dt>Order number</dt>
+					<dd data-order-number>Generating&hellip;</dd>
+				</div>
+				<div>
+					<dt>Confirmation sent to</dt>
+					<dd>you@example.com</dd>
+				</div>
+				<div>
+					<dt>Estimated delivery</dt>
+					<dd>2&ndash;4 business days</dd>
+				</div>
+			</dl>
+
+			<p class="success-card__note">Need help? Reach our support team at <a href="mailto:support@theshop.dev">support@theshop.dev</a> and we&rsquo;ll sort things out.</p>
+
+			<div class="success-card__actions">
+				<a class="button" href="index.html">Back to shopping</a>
+				<a class="button button--secondary" href="cart.html">View cart</a>
+			</div>
+		</section>
+
+		<section class="success-followup" aria-label="Next steps">
+			<h2>What happens next?</h2>
+			<ul>
+				<li><strong>Order review:</strong> Our team is double-checking your products to make sure everything is in stock.</li>
+				<li><strong>Packing:</strong> Once ready, we&rsquo;ll hand the parcel to our delivery partner and email a tracking link.</li>
+				<li><strong>Updates:</strong> You can come back to your cart anytime to review your purchase history.</li>
+			</ul>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<small>&copy; <span data-year></span> The Shop. All rights reserved.</small>
+	</footer>
+
+	<script src="js/success.js" defer></script>
+</body>
+</html>
