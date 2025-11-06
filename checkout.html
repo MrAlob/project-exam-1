@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>The Shop | Checkout</title>
+	<meta name="description" content="Review your cart, add delivery details, and place your order at The Shop.">
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<header class="site-header">
+		<div class="site-header__brand">
+			<a href="index.html" class="site-header__logo">The Shop</a>
+		</div>
+		<nav class="site-nav" aria-label="Primary">
+			<a href="index.html">Home</a>
+			<a href="cart.html">Cart</a>
+			<a href="account/login.html">Login</a>
+		</nav>
+	</header>
+
+	<main class="checkout-main" aria-labelledby="checkout-title">
+		<header class="checkout-intro">
+			<p class="checkout-intro__step">Step 3 of 3</p>
+			<h1 id="checkout-title">Checkout</h1>
+			<p class="checkout-intro__hint">Provide your delivery details, pick a payment method, and confirm your order.</p>
+		</header>
+
+		<form class="checkout-form" data-checkout-form novalidate>
+			<div class="checkout-grid">
+				<section class="checkout-section" aria-labelledby="delivery-title">
+					<h2 id="delivery-title">Delivery address</h2>
+					<div class="form-field-group">
+						<div class="form-field">
+							<label for="first-name">First name</label>
+							<input type="text" id="first-name" name="firstName" autocomplete="given-name" required>
+							<small class="field-error" data-error-for="firstName" aria-live="polite"></small>
+						</div>
+						<div class="form-field">
+							<label for="last-name">Last name</label>
+							<input type="text" id="last-name" name="lastName" autocomplete="family-name" required>
+							<small class="field-error" data-error-for="lastName" aria-live="polite"></small>
+						</div>
+					</div>
+
+					<div class="form-field-group">
+						<div class="form-field">
+							<label for="email">Email</label>
+							<input type="email" id="email" name="email" autocomplete="email" required>
+							<small class="field-error" data-error-for="email" aria-live="polite"></small>
+						</div>
+						<div class="form-field">
+							<label for="phone">Phone</label>
+							<input type="tel" id="phone" name="phone" autocomplete="tel" required>
+							<small class="field-error" data-error-for="phone" aria-live="polite"></small>
+						</div>
+					</div>
+
+					<div class="form-field">
+						<label for="address">Address</label>
+						<input type="text" id="address" name="address" autocomplete="street-address" required>
+						<small class="field-error" data-error-for="address" aria-live="polite"></small>
+					</div>
+
+					<div class="form-field-group">
+						<div class="form-field">
+							<label for="city">City</label>
+							<input type="text" id="city" name="city" autocomplete="address-level2" required>
+							<small class="field-error" data-error-for="city" aria-live="polite"></small>
+						</div>
+						<div class="form-field">
+							<label for="postal">Postal code</label>
+							<input type="text" id="postal" name="postal" autocomplete="postal-code" required>
+							<small class="field-error" data-error-for="postal" aria-live="polite"></small>
+						</div>
+						<div class="form-field">
+							<label for="country">Country</label>
+							<input type="text" id="country" name="country" autocomplete="country-name" required>
+							<small class="field-error" data-error-for="country" aria-live="polite"></small>
+						</div>
+					</div>
+				</section>
+
+				<section class="checkout-section" aria-labelledby="payment-title">
+					<h2 id="payment-title">Payment method</h2>
+					<fieldset class="payment-options">
+						<legend class="sr-only">Select a payment option</legend>
+						<label class="payment-option">
+							<input type="radio" name="paymentMethod" value="card" checked>
+							<span>Credit / Debit card</span>
+						</label>
+						<label class="payment-option">
+							<input type="radio" name="paymentMethod" value="paypal">
+							<span>PayPal</span>
+						</label>
+						<label class="payment-option">
+							<input type="radio" name="paymentMethod" value="klarna">
+							<span>Klarna</span>
+						</label>
+						<small class="field-error" data-error-for="paymentMethod" aria-live="polite"></small>
+					</fieldset>
+
+					<div class="payment-card" data-card-fields>
+						<div class="form-field">
+							<label for="card-number">Card number</label>
+							<input type="text" id="card-number" name="cardNumber" inputmode="numeric" autocomplete="cc-number" placeholder="1234 5678 9012 3456">
+							<small class="field-error" data-error-for="cardNumber" aria-live="polite"></small>
+						</div>
+
+						<div class="form-field-group">
+							<div class="form-field">
+								<label for="card-expiry">Expiry (MM/YY)</label>
+								<input type="text" id="card-expiry" name="cardExpiry" inputmode="numeric" autocomplete="cc-exp" placeholder="08/27">
+								<small class="field-error" data-error-for="cardExpiry" aria-live="polite"></small>
+							</div>
+							<div class="form-field">
+								<label for="card-cvc">CVC</label>
+								<input type="text" id="card-cvc" name="cardCvc" inputmode="numeric" autocomplete="cc-csc" placeholder="123">
+								<small class="field-error" data-error-for="cardCvc" aria-live="polite"></small>
+							</div>
+						</div>
+						<p class="payment-card__hint">Your payment is securely processed and never stored.</p>
+					</div>
+
+					<div class="form-field">
+						<label for="order-notes">Order notes <span class="optional">(optional)</span></label>
+						<textarea id="order-notes" name="orderNotes" rows="3" placeholder="Share delivery instructions or contactless preferences"></textarea>
+					</div>
+				</section>
+
+				<aside class="checkout-summary" aria-labelledby="summary-title">
+					<h2 id="summary-title">Order summary</h2>
+					<ul class="checkout-summary__items">
+						<li>
+							<div>
+								<p class="item-name">Gold headphones</p>
+								<p class="item-meta">Qty 1 · $382.49</p>
+							</div>
+							<p class="item-total">$382.49</p>
+						</li>
+						<li>
+							<div>
+								<p class="item-name">Vanilla perfume</p>
+								<p class="item-meta">Qty 1 · $2,079.99</p>
+							</div>
+							<p class="item-total">$2,079.99</p>
+						</li>
+					</ul>
+					<dl class="checkout-summary__totals">
+						<div>
+							<dt>Subtotal</dt>
+							<dd>$2,462.48</dd>
+						</div>
+						<div>
+							<dt>Shipping</dt>
+							<dd>$25.00</dd>
+						</div>
+						<div class="checkout-summary__grand">
+							<dt>Total</dt>
+							<dd>$2,487.48</dd>
+						</div>
+					</dl>
+					<p class="checkout-summary__note">Prices include taxes. Shipping updates will be sent by email.</p>
+				</aside>
+			</div>
+
+			<p class="form-message" data-form-message role="status" aria-live="polite"></p>
+			<button class="checkout-submit" type="submit">Place order</button>
+		</form>
+	</main>
+
+	<footer class="site-footer">
+		<small>&copy; <span data-year></span> The Shop. All rights reserved.</small>
+	</footer>
+
+	<script src="js/checkout.js" defer></script>
+</body>
+</html>
