@@ -6,7 +6,8 @@ Single-page storefront prototype built for Project Exam 1. The goal is to demons
 - Fetches the latest 12 products on the homepage and displays them in both a carousel and card grid.
 - Product detail page reads `?id=` from the query string, fetches full data for that product, and shows price, discount, tags, and imagery.
 - Shared helpers (`js/utils/dom.js`) manage repeated tasks such as price formatting, tag display, and live status updates for assistive tech.
-- Placeholder flows for cart, checkout, login, register, and success pages to outline future expansion.
+- Cart page renders stored items, totals, and empty-state messaging (localStorage based).
+- Placeholder flows for checkout, login, register, and success pages to outline future expansion.
 - Styling kept lightweight and responsive with a single shared stylesheet and BEM-inspired class names.
 
 ## Getting Started
@@ -31,6 +32,7 @@ project-exam-1/
 ├── js/
 │   ├── home.js             # Homepage carousel + product grid logic
 │   ├── product.js          # Product detail page logic
+│   ├── cart.js             # Shopping cart rendering and totals
 │   └── utils/
 │       └── dom.js          # Reusable helpers for price, tags, and DOM updates
 ├── account/
