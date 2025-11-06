@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>The Shop | Create account</title>
+	<meta name="description" content="Create a new account to start shopping at The Shop.">
+	<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+	<header class="site-header">
+		<div class="site-header__brand">
+			<a href="../index.html" class="site-header__logo">The Shop</a>
+		</div>
+		<nav class="site-nav" aria-label="Account">
+			<a href="../index.html">Home</a>
+			<a href="login.html">Login</a>
+			<a href="register.html" aria-current="page">Register</a>
+		</nav>
+	</header>
+
+	<main class="auth-main" aria-labelledby="register-title">
+		<section class="auth-card">
+			<h1 id="register-title">Create your account</h1>
+			<p class="auth-card__intro">Set up a profile so you can track orders, save your cart, and move through checkout faster.</p>
+			<p class="auth-card__hint">Already have an account? <a href="login.html">Sign in here.</a></p>
+
+			<form data-register-form class="auth-form" novalidate>
+				<div class="form-field">
+					<label for="name">Display name</label>
+					<input type="text" id="name" name="name" autocomplete="name" required>
+					<small class="field-error" data-error-for="name" aria-live="polite"></small>
+				</div>
+
+				<div class="form-field">
+					<label for="email">Email address</label>
+					<input type="email" id="email" name="email" autocomplete="email" required>
+					<small class="field-error" data-error-for="email" aria-live="polite"></small>
+				</div>
+
+				<div class="form-field">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" autocomplete="new-password" minlength="8" required>
+					<small class="field-error" data-error-for="password" aria-live="polite"></small>
+				</div>
+
+				<div class="form-field">
+					<label for="confirm-password">Confirm password</label>
+					<input type="password" id="confirm-password" name="confirmPassword" autocomplete="new-password" minlength="8" required>
+					<small class="field-error" data-error-for="confirmPassword" aria-live="polite"></small>
+				</div>
+
+				<button type="submit">Create account</button>
+			</form>
+
+			<p class="form-message" data-form-message role="status" aria-live="polite"></p>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<small>&copy; <span data-year></span> The Shop. All rights reserved.</small>
+	</footer>
+
+	<script src="../js/register.js" defer></script>
+</body>
+</html>
