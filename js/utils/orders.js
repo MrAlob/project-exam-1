@@ -24,7 +24,6 @@
         try {
             global.localStorage?.setItem(storageKey, JSON.stringify(payload));
         } catch (error) {
-            console.error("Failed to save order summary", error);
             throw new Error("We could not store your order confirmation. Please try again.");
         }
 
@@ -41,7 +40,6 @@
             const parsed = JSON.parse(stored);
             return parsed && typeof parsed === "object" ? parsed : null;
         } catch (error) {
-            console.error("Failed to read order summary", error);
             return null;
         }
     }
@@ -50,7 +48,7 @@
         try {
             global.localStorage?.removeItem(storageKey);
         } catch (error) {
-            console.error("Failed to clear order summary", error);
+            // Silent fail
         }
     }
 

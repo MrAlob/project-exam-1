@@ -309,7 +309,6 @@ async function handleSubmit(event) {
             window.location.href = "success.html";
         }, REDIRECT_DELAY_MS);
     } catch (error) {
-        console.error("Checkout submission failed", error);
         setFormMessage(error.message || "We could not complete your order. Please try again.", "error");
         renderSummary();
     } finally {

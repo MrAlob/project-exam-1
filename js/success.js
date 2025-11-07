@@ -42,7 +42,7 @@ function handleLogout() {
             ShopCart.clear();
         }
     } catch (error) {
-        console.error("Failed to clear cart during logout", error);
+        // Silent fail
     }
 
     updateLogoutButton();
@@ -92,7 +92,6 @@ function getStoredSession() {
             profile: profileRecord,
         };
     } catch (error) {
-        console.error("Failed to read stored session", error);
         return null;
     }
 }
@@ -124,7 +123,6 @@ function parseStoredProfile(rawValue) {
     try {
         return JSON.parse(normalized);
     } catch (error) {
-        console.error("Failed to parse stored profile", error);
         return null;
     }
 }
@@ -137,7 +135,7 @@ function removeIfExists(key) {
     try {
         localStorage.removeItem(key);
     } catch (error) {
-        console.error(`Failed to remove localStorage key: ${key}`, error);
+        // Silent fail
     }
 }
 

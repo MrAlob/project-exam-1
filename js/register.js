@@ -255,7 +255,6 @@ async function parseAuthJson(response) {
     try {
         return await response.json();
     } catch (error) {
-        console.error("Failed to parse auth response", error);
         return null;
     }
 }
