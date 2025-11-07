@@ -91,7 +91,6 @@ async function loadProduct(id) {
         renderProduct(product);
         updateStatus("");
     } catch (error) {
-        console.error(error);
         updateStatus("We could not load this product. Please try again later.");
     }
 }
@@ -187,7 +186,6 @@ function handleAddToCart() {
             addToCartButton.setAttribute("data-added", "true");
         }
     } catch (error) {
-        console.error("Failed to add product to cart", error);
         updateStatus("We could not add this product to your cart. Please try again.");
     }
 }
@@ -225,7 +223,6 @@ function isOwnerAuthenticated() {
         const token = localStorage.getItem(TOKEN_STORAGE_KEY);
         return typeof token === "string" && token.length > 0;
     } catch (error) {
-        console.error("Unable to read authentication token", error);
         return false;
     }
 }
@@ -377,7 +374,6 @@ function formatReviewDate(value) {
             day: "numeric",
         }).format(new Date(timestamp));
     } catch (error) {
-        console.error("Failed to format review date", error);
         return "";
     }
 }
@@ -428,7 +424,6 @@ function handleShareClick(event) {
                 if (error && error.name === "AbortError") {
                     return;
                 }
-                console.error("Share failed", error);
                 updateShareStatus("We could not share the link.", "error");
             });
         return;
@@ -441,7 +436,6 @@ function handleShareClick(event) {
                 updateShareStatus("Link copied to your clipboard.");
             })
             .catch((error) => {
-                console.error("Clipboard copy failed", error);
                 fallbackCopyShareLink(currentShareUrl);
             });
         return;
@@ -474,7 +468,6 @@ function copyTextUsingInput(text) {
         const result = document.execCommand("copy");
         return result;
     } catch (error) {
-        console.error("execCommand copy failed", error);
         return false;
     } finally {
         if (input && input.parentNode) {

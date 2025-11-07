@@ -129,7 +129,7 @@ function handleLogout() {
             window.ShopCart.clear();
         }
     } catch (error) {
-        console.error("Failed to clear session during logout", error);
+        // Silent fail
     }
 
     initializeAuthView({ preserveMessage: true });
@@ -216,7 +216,6 @@ async function parseAuthJson(response) {
     try {
         return await response.json();
     } catch (error) {
-        console.error("Failed to parse auth response", error);
         return null;
     }
 }
@@ -392,7 +391,6 @@ function parseStoredProfile(rawValue) {
     try {
         return JSON.parse(normalized);
     } catch (error) {
-        console.error("Failed to parse stored profile", error);
         return null;
     }
 }
@@ -405,7 +403,7 @@ function removeIfExists(key) {
     try {
         localStorage.removeItem(key);
     } catch (error) {
-        console.error(`Failed to remove localStorage key: ${key}`, error);
+        // Silent fail
     }
 }
 

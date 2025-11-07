@@ -60,7 +60,6 @@ async function init() {
         renderProductGrid(products);
         setupCarousel(products.slice(0, 3));
     } catch (error) {
-        console.error(error);
         setStatus(productsStatus, "We could not load products. Please try again soon.");
         setStatus(carouselStatus, "Carousel is unavailable right now.");
         toggleCarouselControls(true);

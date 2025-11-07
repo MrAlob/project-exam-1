@@ -62,7 +62,6 @@
                 .filter(Boolean)
                 .map((item) => ({ ...item }));
         } catch (error) {
-            console.error("Failed to read the cart from storage", error);
             return [];
         }
     }
@@ -75,7 +74,6 @@
             global.localStorage?.setItem(storageKey, JSON.stringify(normalized));
             return true;
         } catch (error) {
-            console.error("Failed to update the cart", error);
             return false;
         }
     }
@@ -160,7 +158,7 @@
         try {
             global.localStorage?.removeItem(storageKey);
         } catch (error) {
-            console.error("Failed to clear the cart", error);
+            // Silent fail
         }
     }
 
@@ -334,7 +332,6 @@ function init() {
 
             renderCart();
         } catch (error) {
-            console.error("Failed to update cart quantity", error);
             setStatusMessage(statusNode, error.message || "We could not update your cart. Please try again.");
         }
     }
@@ -348,7 +345,6 @@ function init() {
             removeItem(itemId);
             renderCart();
         } catch (error) {
-            console.error("Failed to remove cart item", error);
             setStatusMessage(statusNode, error.message || "We could not update your cart. Please try again.");
         }
     }
