@@ -1,5 +1,7 @@
 # The Shop Frontend
 
+Working through this exam deepened my understanding of modular vanilla JavaScript for API-driven UI, reinforced responsive layout patterns in CSS, and highlighted the practical value of structuring semantic HTML with accessibility-first thinking at each step.
+
 Single-page storefront prototype built for Project Exam 1. The goal is to demonstrate how to consume the Noroff Online Shop API, render product lists, and show individual product information while keeping accessibility and clean structure in focus.
 
 ## Key Features
