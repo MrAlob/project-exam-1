@@ -224,7 +224,7 @@ main {
 
 .carousel__slides {
   position: relative;
-  min-height: clamp(24rem, 55vw, 36rem);
+  min-height: clamp(14rem, 28vw, 20rem); /* Reduced height */
   border-radius: 1rem;
   background: #ffffff;
   overflow: hidden;
@@ -245,8 +245,8 @@ main {
 
 .carousel__image {
   width: 100%;
-  max-width: clamp(340px, 50vw, 580px);
-  height: clamp(20rem, 48vw, 32rem);
+  max-width: clamp(220px, 32vw, 340px); /* Reduced max width */
+  height: clamp(8rem, 18vw, 14rem);    /* Reduced height */
   object-fit: contain;
   object-position: center;
   justify-self: center;
@@ -317,7 +317,19 @@ main {
 .product-grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .product-card {
